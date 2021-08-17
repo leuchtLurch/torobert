@@ -36,6 +36,9 @@ class textGenerator(object):
         else:
             message =  self.torolib.buildMessage(texts = self.texts, textIndices = self.textIndices, tags=['top'], variables=variables)
             if message:
+                prefix =  self.torolib.buildMessage(texts = self.texts, textIndices = self.textIndices, tags=['prefix'], variables=variables)
+                if prefix:
+                    message["text"] = prefix["text"] + message["text"]
                 message['keepAudioFile'] = False
                 self.redis.hset ('horoscope','dayLastUsage',now.strftime('%Y%m%d'))
                 self.redis.hset ('horoscope','lastUsedMessage',json.dumps(message))
