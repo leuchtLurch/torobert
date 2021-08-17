@@ -136,7 +136,8 @@ class talk(object):
 
     def textToSoundfile(self, text, voice='Hans', textType='ssml', keepAudioFile=False):
         '''takes a text string as input and converts it to a sound file on disk'''
-        logging.info('tts called: '+ text)
+        logging.info('tts called')
+        logging.debug('tts text: ' + text)
         if keepAudioFile == False:
             fileNamePrefix = 'temp'
         else:
