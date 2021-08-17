@@ -108,7 +108,7 @@ class torobert(object):
             output = shell_output("vcgencmd measure_temp")
             return float(output[output.index('=') + 1:output.rindex("'")])
         except Exception as e:
-            logging.warning('error while calling vcgencmd, this is to be expected on non-raspberry-pis, error message:',exc_info=e)
+            logging.warning('error while calling vcgencmd, this is to be expected on non-raspberry-pis')
 
 
     def getVariableValues(self, noMotionSince=-1):
