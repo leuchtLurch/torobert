@@ -79,8 +79,17 @@ class textGenerator(object):
                         except:
                             self.log.error('getMails: Error while decoding the mail')
                     mailbody = html2text.html2text(mailbody)
-                    self.mails.put({'messageId':messageId,'from':envelope.from_[0].name.decode(),'date':envelope.date,'subject':self.decode_mime_words(envelope.subject.decode()),'text':mailbody})
-                    self.log.info(f'reading mail, from={envelope.from_[0].name.decode()} aka. {envelope.from_[0].mailbox.decode()}@{envelope.from_[0].host.decode()}, date={envelope.date}')
+                    # commit mail to queue if its sender is not on the senderBlockList
+                    senderAddress = envelope.from_[0].mailbox.decode() + "@" + envelope.from_[0].host.decode()
+                    senderInBlocklist = False
+                    for sender in self.config.get('senderBlockList',[]):
+                        if sender in senderAddress:
+                            senderInBlocklist = True
+                    if not senderInBlocklist:
+                        self.mails.put({'messageId':messageId,'from':envelope.from_[0].name.decode(),'date':envelope.date,'subject':self.decode_mime_words(envelope.subject.decode()),'text':mailbody})
+                        self.log.info(f'reading mail, from={envelope.from_[0].name.decode()} aka. {senderAddress}, date={envelope.date}')
+                    else:
+                        self.log.info(f'not reading mail because of senderBlockList, from={envelope.from_[0].name.decode()} aka. {senderAddress}, date={envelope.date}')
                 self.log.info(f'found {self.mails.qsize()} unread mails')
 
 
