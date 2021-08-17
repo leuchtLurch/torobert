@@ -1,2 +1,2 @@
 # torobert
-A talking trophy on the wall
+a babbling trophy on the wall

@@ -1,0 +1,62 @@
+body {
+    padding: 15px;
+    font-family: Roboto;
+    background-color: #212125;
+    color: white;
+}
+.mainContent {
+    max-width: 50rem;
+}
+.card.play{
+    width: 9rem;
+    background-color: #2e2e35;
+    float:left;
+    text-align:center;
+    margin: 5px;
+    padding: 10px 1px 3px 1px;
+    color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+nav {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card i.fa{
+    font-size:48px;
+}
+
+.card i.fa.cs1 {
+    color: #e2f0cb;
+}
+.card i.fa.cs2 {
+    color: #ffb7b2;
+}
+.card i.fa.cs3 {
+    color: #c7ceea;
+}
+.card i.fa.cs4 {
+    color: #ffdac1;
+}
+.card i.fa.cs5 {
+    color: #b5ead7;
+}
+
+
+#mode {
+    margin: 20px 0 20px 0;
+}
+
+h1 {
+    font-size: 1.8em;
+    margin: 20pt 0pt 10pt 0pt;
+}
+h2 {
+    font-size: 1.6em;
+}
+h1 {
+    font-size: 1.4em;
+}
+.setting {
+    padding-top: 15px;
+}

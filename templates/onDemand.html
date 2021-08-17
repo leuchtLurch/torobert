@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="de">
+    {% include 'head.html' %}
+    <body>
+        <div class='mainContent'>
+            {% include 'navbar.html' %}
+            <h1>Sag' was!</h1>
+            {% for card in cards %}
+                <a href='#'>
+                    <div class="card play" data-textGeneratorName="{{ card.name }}">
+                      <i class="fa {{ card.fontAwesomeIcon }}"></i>
+                      <div class="card-body">
+                        <p class="card-text">{{ card.heading }}</p>
+                      </div>
+                    </div>
+                </a>
+            {% endfor %}
+
+            <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        </div>
+    </body>
+</html>

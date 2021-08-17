@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# torobert stuff
+soundfiles/*
+static/js/bootstrap*
+static/css/bootstrap*
+textValidator.py
