@@ -24,8 +24,8 @@ class textGenerator(object):
     def getWebAppConfig(self):
         '''returns a dict which tells torobert how to make this textGenerator configurable through the dynamic configuration website'''
         result = { \
-            'onDemand': 1, \
-            'heading': 'Themen', \
+            'onDemand': 0, \
+            'heading': 'System', \
             'fontAwesomeIcon': 'fas fa-comments', \
         }
         return result
