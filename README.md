@@ -31,7 +31,7 @@ An extendable collection of text generator modules define, what torobert has to 
   Torobert reads your mails so you don't have to.
 - **conversation starters**  
   Torobert provides you with challenging topics to (re)start a stalling conversation.
-- **smartassery** (wiki)  
+- **smartassery**  
   Torobert likes to delight you with uninvited bits of only partially useful facts - taken directly from none but the most excellent Wikipedia articles.
 
 ### how texts are triggered
@@ -54,12 +54,14 @@ The text generators can be triggered by
   - talk.py (receives messages from torobert.py, converts text into audio files using Amazon Polly and then plays the audio using pygame)
 - Redis remote dictionary server is used to keep states. It also manages the communication between torobert.py, sensors.py and talk.py by acting as a publish/subscribe message broker.
 
-The files from the git repository mostly go to `/opt/torobert/torobert`.
-The files from the exampleConfiguration go to `/etc/torobert` - they contain configuration files as well as the static texts.
+The files from the git repository mostly go to `/opt/torobert/torobert.`
+The files from the exampleConfiguration go to `/etc/torobert`- they contain configuration files as well as the static texts.
 
 The additional module "wifiConfig.py" can be called with root privileges when no internet connection is available. It can headlessly establish a new wifi connection when a USB drive with an ssid and a password are provided.
 
-## detailed requirements
+The webApp also requires bootstrap's js- and css-files to be copied in the corespondig subfolders of `static.`
+
+## detailed package requirements
 - necessary software packages
   - redis
   - libSDL2-2.0-0
