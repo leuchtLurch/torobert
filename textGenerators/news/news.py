@@ -54,23 +54,28 @@ class textGenerator(object):
                         offset += 1
                         for content in soup.find_all(articleType.get('element', 'div'),{'class':articleType.get('filterClass','')}):
                             m += 1
-                            article = ''
                             for e in articleType.get('excludedElements',[]):
                                 for trash in content.find_all(e):
                                     trash.decompose()
-                            content = content.get_text("<break time='0.5s'/>")
+                            content = content.get_text("|")
                             content = str(content).replace('\n',' ').replace('\r','')
                             # additional string based text replacements
                             for k in articleType.get('replacements', []):
                                 if len(k)==2:
                                     content = content.replace(k[0],k[1])
-                            content = BeautifulSoup(content,features="html.parser")
-                            for child in content.descendants:
-                                if isinstance(child, str):
-                                    child = child.replace('\n',' ').strip()
-                                    if child != '':
-                                        article += child + self.config['separator']
-                            if article:
+                            # clean the news article, insert separating breaks
+                            contentParts = content.split('|')
+                            article = ''
+                            for contentPart in contentParts:
+                                if contentPart.replace('|','').strip() != '':
+                                    article += contentPart + self.config['separator']
+                            # check if words from the blockList are in the article
+                            blockListMatch = False
+                            for bockListTerm in articleType.get('bockListTerms',[]):
+                                if bockListTerm.lower() in article.lower():
+                                    blockListMatch = True
+                            # add the article to the list of available articles
+                            if article and not blockListMatch:
                                 article = article.replace(self.config['separator']+':'+self.config['separator'],self.config['separator'])
                                 self.newsArticles.append((m*increment + offset,{'article': article, 'prefixTag': articleType.get('prefixTag', None)}))
                 self.newsArticles.sort(key=lambda tup: tup[0])
