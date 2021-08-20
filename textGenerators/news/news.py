@@ -46,8 +46,8 @@ class textGenerator(object):
                 offset = 0
                 for url in self.config['urls'].keys():
                     logging.debug('gathering news from '+url)
-
-                    page = urllib.request.urlopen(url)
+                    req = urllib.request.Request(url, data=None, headers={'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0'})
+                    page = urllib.request.urlopen(req)
                     soup = BeautifulSoup(page.read(),features="html.parser")
                     m = 0
                     for articleType in self.config['urls'][url]:
