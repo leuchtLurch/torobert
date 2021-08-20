@@ -105,7 +105,7 @@ class talk(object):
             text = text.replace(textToReplace,self.config['tts'].get('textReplacements',{}).get(textToReplace,textToReplace))
         filename = self.textToSoundfile(text=text, keepAudioFile=keepAudioFile)
         if not volume:
-            volume = int(self.redis.get('volume'))
+            volume = int(self.redis.get('volume',80))
         # workaround: after a few hours, pygame distorts the sound output unless it is reinitialized often
         if self.redis.get('noPygameReinit') != b'1':
             pygame.mixer.quit()
