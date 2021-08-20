@@ -107,9 +107,10 @@ class talk(object):
         if not volume:
             volume = int(self.redis.get('volume'))
         # workaround: after a few hours, pygame distorts the sound output unless it is reinitialized often
-        pygame.mixer.quit()
-        pygame.mixer.init()
-        self.audio = pygame.mixer.music
+        if self.redis.get('noPygameReinit') != b'1':
+            pygame.mixer.quit()
+            pygame.mixer.init()
+            self.audio = pygame.mixer.music
         # now let's acutally play the audio file
         self.audio.set_volume(volume/100)
         self.audio.load(filename)
