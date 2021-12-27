@@ -45,6 +45,7 @@ class sensors(object):
                     logging.debug(f"sending result {result}")
                     self.redis.hset('sensors','motion',result.get('motion',-1))
                     self.redis.hset('sensors','motionLastDetection',time.time())
+                    time.sleep(0.1)
         except KeyboardInterrupt:
             logging.info('Closing Torobert\'s sensor data monitoring, KeyboardInterrupt...')
         except Exception as e:

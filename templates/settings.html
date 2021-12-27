@@ -17,7 +17,7 @@
                 <input type="checkbox" class="custom-control-input" id="cbTalkingInitiative" {% if settings.talkingInitiative == True %}checked{% endif %}>
                 <label class="custom-control-label" for="cbTalkingInitiative"><strong>&nbsp;Quasselstrippenmodus</strong></label>
             </div>
-            <p>Wenn du dieses Häkchen entfernst, dann wird {{ meta.title }} nur noch auf Anfrage reden - nämlich wenn jemand in der webApp auf einen Button klickt.</p>
+            <p>Wenn du dieses Häkchen entfernst, dann wird {{ meta.title }} nur noch auf Anfrage reden - nämlich wenn jemand in der webApp auf einen Button klickt. Der Quasselstrippenmodus wird dann automatisch am nächsten Morgen um sechs Uhr wieder eingeschaltet.</p>
         </div>
         <div class="setting">
             <div class="custom-control custom-switch">
@@ -27,6 +27,6 @@
             <p>Hiermit wird die Fernwartung ermöglicht, indem ein verschlüsselter SSH-Tunnel zu einem Wartungsserver aufgebaut und offen gehalten wird. Änderungen werden erst nach bis zu 5 Minuten wirksam.</p>
         </div>
     </form>
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script>
   </body>
 </html>

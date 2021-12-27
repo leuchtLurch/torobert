@@ -127,7 +127,10 @@ class torobert(object):
     def logStatus(self, me):
         '''writes a log entry with system status info - for now only including cpu temperature'''
         cpuTemp = self.getCpuTemperature()
-        logging.info(f"CPU Temperature at {cpuTemp}")
+        if self.config.get('detailedLogStatus',0) == 1:
+            logging.info(f"CPU Temperature at {cpuTemp}, motion {self.redis.hget('sensors','motion')}, mockMotion {self.redis.hget('sensors','mockMotion')}")
+        else:
+            logging.info(f"CPU Temperature at {cpuTemp}")
 
 
     def main(self):
@@ -205,22 +208,7 @@ class torobert(object):
         meta = {'title': self.config['nameWritten']}
         @self.app.route('/')
         def wcOnDemand():
-            cards = []
-            textGenerators = self.config['textGenerators']
-            i = 0
-            for textGeneratorName in textGenerators.keys():
-                if 'webApp' in textGenerators[textGeneratorName].keys():
-                    if textGenerators[textGeneratorName]['webApp'].get('onDemand',0)==1:
-                        i += 1
-                        if i > 5:
-                            i = 1
-                        cards.append({ \
-                            'name': textGeneratorName, \
-                            'heading': textGenerators[textGeneratorName]['webApp'].get('heading',textGeneratorName), \
-                            'fontAwesomeIcon': textGenerators[textGeneratorName]['webApp'].get('fontAwesomeIcon','fas fa-question')+' cs%s' % i})
-            return render_template('onDemand.html', cards=cards, meta=meta)
-        @self.app.route('/settings/')
-        def wcSettings():
+        
             volume = self.redis.get('volume')
             if volume:
                 volume = int(volume)
@@ -234,8 +222,22 @@ class torobert(object):
             if self.redis.get('talkingInitiative')==b"1":
                 settings['talkingInitiative'] = True
             else:
-                settings['talkingInitiative'] = False
-            return render_template('settings.html', meta=meta, settings=settings)
+                settings['talkingInitiative'] = False        
+        
+            cards = []
+            textGenerators = self.config['textGenerators']
+            i = 0
+            for textGeneratorName in textGenerators.keys():
+                if 'webApp' in textGenerators[textGeneratorName].keys():
+                    if textGenerators[textGeneratorName]['webApp'].get('onDemand',0)==1:
+                        i += 1
+                        if i > 5:
+                            i = 1
+                        cards.append({ \
+                            'name': textGeneratorName, \
+                            'heading': textGenerators[textGeneratorName]['webApp'].get('heading',textGeneratorName), \
+                            'fontAwesomeIcon': textGenerators[textGeneratorName]['webApp'].get('fontAwesomeIcon','fas fa-question')+' cs%s' % i})
+            return render_template('onDemand.html', cards=cards, meta=meta, settings=settings)
         @self.app.route('/onDemandAction', methods=['POST'])
         def onDemandAction():
             self.redis.publish('webApp2torobert',json.dumps({'action':'onDemand', 'textGeneratorName':request.form['textGeneratorName']}))
